@@ -11,13 +11,13 @@ module NavigationHelpers
     when /the home\s?page/
       '/'
     when /the signup page/
-      new_user_path
+      new_users_path
 
     when /the new trip page/
-      new_trip_path
+      new_trips_path
 
     when /the login page/
-      login_path
+      new_session_path
     
     
     
