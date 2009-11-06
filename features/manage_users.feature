@@ -6,14 +6,16 @@ Feature: Manage user
   Scenario: Register a new user
     Given I am on the signup page
     When I fill in "Username" with "xiplias"
+    And I fill in "Email" with "xiplias@gmail.com"
     And I fill in "Password" with "tetris"
     And I fill in "Password Confirmation" with "tetris"
     And I press "Submit"
-    Then I should be created as a new user
+    Then I should see "Successfully created user."
     
   Scenario: Login as an user
     Given I am on the login page
     When I fill in "Username" with "xiplias"
     And I fill in "Password" with "tetris"
     And I press "Submit"
-    Then I should be logged in
+    Then I should see "Successfully logged in."
+    
