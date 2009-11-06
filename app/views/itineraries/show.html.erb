@@ -1,0 +1,12 @@
+<% title "Itinerary" %>
+
+<p>
+  <strong>Title:</strong>
+  <%=h @itinerary.title %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_itinerary_path(@itinerary) %> |
+  <%= link_to "Destroy", @itinerary, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", itineraries_path %>
+</p>
