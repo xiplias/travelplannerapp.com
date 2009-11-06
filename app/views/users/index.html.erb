@@ -1,0 +1,25 @@
+<% title "Users" %>
+
+<table>
+  <tr>
+    <th>Username</th>
+    <th>Email</th>
+    <th>Crypted Password</th>
+    <th>Password Salt</th>
+    <th>Persistence Token</th>
+  </tr>
+  <% for user in @users %>
+    <tr>
+      <td><%=h user.username %></td>
+      <td><%=h user.email %></td>
+      <td><%=h user.crypted_password %></td>
+      <td><%=h user.password_salt %></td>
+      <td><%=h user.persistence_token %></td>
+      <td><%= link_to "Show", user %></td>
+      <td><%= link_to "Edit", edit_user_path(user) %></td>
+      <td><%= link_to "Destroy", user, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New User", new_user_path %></p>
