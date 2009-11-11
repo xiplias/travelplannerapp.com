@@ -21,10 +21,11 @@ Rails::Initializer.run do |config|
   config.gem "chriseppstein-compass", :lib => "compass"
 
   # cucumber dependencies
-  config.gem "cucumber", :version => "0.4.3"
+  config.gem "cucumber"
   config.gem "treetop"
   config.gem "nokogiri"
   config.gem "builder"
+  config.gem "pickle"
   
   # User Authencation
   config.gem "authlogic"
