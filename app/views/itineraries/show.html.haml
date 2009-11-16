@@ -1,14 +1,15 @@
 - title @itinerary.title
-= @map.to_html
-%div{ :style => "width: 1000px; height: 500px; float: left;" }
+#itinerary
+  %h5 Itinerary Selector
+  = text_field :locations, :name, :id => "geocoding_search", :size => 26
+%div
+  = @map.to_html
+%div{ :style => "width: 100%; height: 550px" }
   = @map.div
 %div{ :style => "clear: both" }
-%p
-  %strong
-    Title:
-%p
-  = link_to "Edit", edit_itinerary_path(@itinerary)
-  |
-  = link_to "Destroy", @itinerary, :confirm => 'Are you sure?', :method => :delete
-  |
-  = link_to "View All", itineraries_path
+/ %p
+/   = link_to "Edit", edit_itinerary_path(@itinerary)
+/   |
+/   = link_to "Destroy", @itinerary, :confirm => 'Are you sure?', :method => :delete
+/   |
+/   = link_to "View All", itineraries_path
