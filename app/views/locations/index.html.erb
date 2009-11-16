@@ -1,0 +1,23 @@
+<% title "Locations" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Latitude</th>
+    <th>Longitude</th>
+    <th>Itinerary</th>
+  </tr>
+  <% for location in @locations %>
+    <tr>
+      <td><%=h location.name %></td>
+      <td><%=h location.latitude %></td>
+      <td><%=h location.longitude %></td>
+      <td><%=h location.itinerary_id %></td>
+      <td><%= link_to "Show", location %></td>
+      <td><%= link_to "Edit", edit_location_path(location) %></td>
+      <td><%= link_to "Destroy", location, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Location", new_location_path %></p>

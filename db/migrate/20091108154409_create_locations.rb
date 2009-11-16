@@ -4,7 +4,7 @@ class CreateLocations < ActiveRecord::Migration
       t.string :name
       t.integer :latitude
       t.integer :longitude
-
+      t.belongs_to :itinerary
       t.timestamps
     end
   end
