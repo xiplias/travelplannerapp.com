@@ -1,0 +1,34 @@
+- title "Users"
+%table
+  %tr
+    %th
+      Username
+    %th
+      Email
+    %th
+      Crypted Password
+    %th
+      Password Salt
+    %th
+      Persistence Token
+  - for user in @users
+  %tr
+    %td
+      = h user.username
+    %td
+      = h user.email
+    %td
+      = h user.crypted_password
+    %td
+      = h user.password_salt
+    %td
+      = h user.persistence_token
+    %td
+      = link_to "Show", user
+    %td
+      = link_to "Edit", edit_user_path(user)
+    %td
+      = link_to "Destroy", user, :confirm => 'Are you sure?', :method => :delete
+  - end
+%p
+  = link_to "New User", new_user_path

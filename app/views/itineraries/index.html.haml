@@ -1,0 +1,18 @@
+- title "Itineraries"
+%table
+  %tr
+    %th
+      Title
+  - for itinerary in @itineraries
+  %tr
+    %td
+      = h itinerary.title
+    %td
+      = link_to "Show", itinerary
+    %td
+      = link_to "Edit", edit_itinerary_path(itinerary)
+    %td
+      = link_to "Destroy", itinerary, :confirm => 'Are you sure?', :method => :delete
+  - end
+%p
+  = link_to "New Itinerary", new_itinerary_path

@@ -1,0 +1,14 @@
+- title "Log in"
+- form_for @user_session do |form|
+= form.error_messages
+%p
+  = form.label :username, "Username"
+  %br
+  = form.text_field :username
+%p
+  = form.label :password, "Password"
+  %br
+  = form.password_field :password
+%p
+  = form.submit "Submit"
+- end
