@@ -5,6 +5,8 @@ class ItinerariesController < ApplicationController
   
   def show
     @itinerary = Itinerary.find(params[:id])
+    
+    @map = GoogleMap::Map.new
   end
   
   def new

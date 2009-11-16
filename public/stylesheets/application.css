@@ -19,10 +19,10 @@ a {
 }
 
 #container {
-  width: 75%;
+  width: 1000px;
   margin: 0 auto;
   background-color: #FFF;
-  padding: 20px 40px;
+  //padding: 20px 40px;
   border: solid 1px black;
   margin-top: 20px;
 }
