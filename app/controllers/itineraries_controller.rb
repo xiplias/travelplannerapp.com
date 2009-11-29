@@ -7,6 +7,8 @@ class ItinerariesController < ApplicationController
     @itinerary = Itinerary.find(params[:id])
     
     @map = GoogleMap::Map.new
+    
+    @map.controls = [ :large, :scale, :type ]
   end
   
   def new
