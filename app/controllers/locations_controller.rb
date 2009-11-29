@@ -4,7 +4,7 @@ class LocationsController < ApplicationController
   end
   
   def find
-    @geo_result = Location.find_location(params[:name])
+    @geo_result = Location.find_location(params[:q])
     
     respond_to do |wants|
       wants.js { render :partial => "autocomplete", :layout => false }

@@ -1,10 +1,75 @@
-var a;
-jQuery(function(){
-  a = $('#geocoding_search').autocomplete("/locations/find");
+var locations = new Array;
 
+function addLocation (item) {
+  locations.push(item);
+  drawMap();
+  drawList();
+  
+}
+
+function drawList() {
+  $(locations).each(function() {
+    $("#location_list").append("<li>"+this.address+"</li>");
+  });
+}
+
+function drawMap() {
+  google_map.clearOverlays();
+  
+  
+  var last_entry = new Array;
+  var points = locations.length;
+  var current = 1;
+  
+  $(locations).each(function() {
+    var latlng = new GLatLng(this.lat, this.lng);
+    google_map.addOverlay(new GMarker(latlng));
+
+    if(current != 1) {
+      var polyline = new GPolyline([
+        new GLatLng(last_entry[0], last_entry[1]),
+        new GLatLng(this.lat, this.lng)
+      ], "#ff0000", 10);
+      google_map.addOverlay(polyline);
+    }
+    
+    current++;
+    
+    last_entry = [this.lat, this.lng];
+  });
+  
+  
+
+}
+
+$(document).ready(function(){  
+  
+  $("#geocoding_suggest").suggest("/locations/find",{
+    delay: 300,
+		createItems:function(txt) {
+			if (typeof JSON!=='undefined' && typeof JSON.parse==='function')
+				return JSON.parse(txt);
+			else
+				return eval('('+ txt +')');
+		},
+		formatItem:function(item,q) {
+			return "<li>"+this.addMatchClass(item.address,q)+"</li>";
+		},
+		selectItemText:function(item) {
+			return item.address;
+		},
+		onSelect: function(item) {  
+			var latlng = new GLatLng(item.lat, item.lng);
+      google_map.addOverlay(new GMarker(latlng));
+      
+      addLocation(item);
+      $("#geocoding_suggest").val("");
+		}
+	});
+
+  
   $("body").bind("ajaxSend", function(elm, xhr, s) {
-
-    // Set right accept
+    // Set right accept for rails
     xhr.setRequestHeader("Accept", "text/javascript")
 
     // Inserts auth_token if present
