@@ -17,16 +17,8 @@ Rails::Initializer.run do |config|
   # Specify gems that this application depends on and have them installed with rake gems:install
 
   # Haml and Sass
-  config.gem "haml", :version => ">=2.2.5"
-  config.gem "chriseppstein-compass", :lib => "compass"
+  config.gem "haml"
 
-  # cucumber dependencies
-  config.gem "cucumber"
-  config.gem "treetop"
-  config.gem "nokogiri"
-  config.gem "builder"
-  config.gem "pickle"
-  
   # Maps
   config.gem "geokit"
   
