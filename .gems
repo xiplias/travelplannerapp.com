@@ -1,4 +1,4 @@
 haml
-compass
+chriseppstein-compass --version '>= 0.8.7' --source gems.github.com
 geokit
 authlogic

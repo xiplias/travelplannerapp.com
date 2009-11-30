@@ -18,7 +18,7 @@ Rails::Initializer.run do |config|
 
   # Haml and Sass
   config.gem "haml"
-  config.gem "compass"
+  config.gem "chriseppstein-compass", :lib => "compass"
 
   # cucumber dependencies
   # config.gem "cucumber"
