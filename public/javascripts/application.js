@@ -42,7 +42,7 @@ function drawMap() {
     
     current++;
     
-    last_entry = [this.lat, this.lng];
+    last_entry = [this.latitude, this.longitude];
   });
   
   
@@ -52,7 +52,7 @@ function drawMap() {
 $(document).ready(function(){  
   
   $("#geocoding_suggest").suggest("/locations/find",{
-    delay: 300,
+    delay: 200,
 		createItems:function(txt) {
 			if (typeof JSON!=='undefined' && typeof JSON.parse==='function')
 				return JSON.parse(txt);
