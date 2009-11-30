@@ -13,7 +13,7 @@ class Location < ActiveRecord::Base
     locations = Array.new
     
     result.all.each do |r|
-      locations << {:address => r.full_address, :lat => r.lat, :lng => r.lng}
+      locations << {:address => r.full_address, :latitude => r.lat, :longitude => r.lng}
     end
     
     locations
