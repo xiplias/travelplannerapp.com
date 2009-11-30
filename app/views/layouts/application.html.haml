@@ -7,6 +7,10 @@
     = stylesheet_link_tag 'compiled/print.css', :media => 'print'
     /[if IE]
       = stylesheet_link_tag 'compiled/ie.css', :media => 'screen, projection'
+    - if protect_against_forgery?
+      :javascript
+        window._auth_token_name = "#{request_forgery_protection_token}";
+        window._auth_token = "#{form_authenticity_token}";
     = yield(:head)
   %body
     #container
