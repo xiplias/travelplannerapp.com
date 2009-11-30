@@ -82,6 +82,10 @@ a {
   top: 0;
   padding: 5px 10px; }
 
+/* line 81, ../../../app/stylesheets/partials/_application.sass */
+#location_list {
+  font-size: 0.8em; }
+
 /* line 1, ../../../app/stylesheets/partials/_typography.sass */
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, table, caption, tbody, tfoot, thead, tr, th, td, hr {
   margin: 0;
@@ -267,6 +271,7 @@ sub {
 
 /* line 1, ../../../app/stylesheets/partials/_suggest.sass */
 .ac_results {
+  width: 200px;
   border: 1px solid gray;
   background-color: white;
   padding: 0;
@@ -275,19 +280,19 @@ sub {
   position: absolute;
   z-index: 10000;
   display: none; }
-  /* line 11, ../../../app/stylesheets/partials/_suggest.sass */
+  /* line 12, ../../../app/stylesheets/partials/_suggest.sass */
   .ac_results li {
     padding: 2px 5px;
     white-space: nowrap;
     color: #101010;
     text-align: left; }
 
-/* line 17, ../../../app/stylesheets/partials/_suggest.sass */
+/* line 18, ../../../app/stylesheets/partials/_suggest.sass */
 .ac_over {
   cursor: pointer;
   background-color: #F0F0B8; }
 
-/* line 22, ../../../app/stylesheets/partials/_suggest.sass */
+/* line 23, ../../../app/stylesheets/partials/_suggest.sass */
 .ac_match {
   font-weight: bold;
   color: black; }
