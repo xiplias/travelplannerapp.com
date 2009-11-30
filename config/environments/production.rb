@@ -26,3 +26,5 @@ config.action_view.cache_template_loading            = true
 
 # Enable threaded mode
 # config.threadsafe!
+
+GOOGLE_APPLICATION_ID = "ABQIAAAAavRveM0sb5JQ-mR6tmNMSxTkCGA-ar1Lgplkcb-HdpimytqBvhTh8RtyL-AQq3JDQ-1bgbUypPjmPQ"
