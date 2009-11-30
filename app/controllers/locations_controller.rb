@@ -1,6 +1,10 @@
 class LocationsController < ApplicationController
   def index
-    @locations = Location.all
+    if params[:itinerary_id]
+      @locations = Location.find(:all, :conditions => "itinerary_id = #{params[:itinerary_id]}")
+    else
+      @locations = Location.all
+    end
   end
   
   def find
@@ -23,9 +27,15 @@ class LocationsController < ApplicationController
     @location = Location.new(params[:location])
     if @location.save
       flash[:notice] = "Successfully created location."
-      redirect_to @location
+      respond_to do |format|
+        format.html { redirect_to @location }
+        format.js { render :text => "success"}
+      end
     else
-      render :action => 'new'
+      respond_to do |format|
+        format.html { redirect_to @location }
+        format.js { render :text => "failure"}
+      end
     end
   end
   
