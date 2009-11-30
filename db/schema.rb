@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091108154409) do
+ActiveRecord::Schema.define(:version => 20091130215742) do
 
   create_table "itineraries", :force => true do |t|
     t.string   "title"
@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(:version => 20091108154409) do
 
   create_table "locations", :force => true do |t|
     t.string   "name"
-    t.integer  "latitude"
-    t.integer  "longitude"
+    t.float    "latitude"
+    t.float    "longitude"
     t.integer  "itinerary_id"
     t.datetime "created_at"
     t.datetime "updated_at"
