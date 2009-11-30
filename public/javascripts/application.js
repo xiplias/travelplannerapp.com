@@ -8,6 +8,7 @@ function addLocation (item) {
 }
 
 function drawList() {
+  $("#location_list").html("");
   $(locations).each(function() {
     $("#location_list").append("<li>"+this.address+"</li>");
   });
