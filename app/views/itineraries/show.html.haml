@@ -1,7 +1,7 @@
 - title @itinerary.title
 #itinerary
   %h5 Itinerary Selector
-  = text_field :locations, :name, :id => "geocoding_suggest", :size => 26
+  = text_field :locations, :name, :id => "geocoding_suggest", :size => 26, :value => "", :class => "focus"
   %ul#location_list
 %div
   = @map.to_html
