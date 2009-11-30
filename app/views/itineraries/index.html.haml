@@ -1,12 +1,45 @@
 - title "Itineraries"
-%table
-  %tr
-    %th
-      Title
-  - for itinerary in @itineraries
+%div{:style => "float:left;width:70%;"}
+  %table
     %tr
-      %td
-        = link_to itinerary.title, itinerary
+      %th
+        Title
+    - for itinerary in @itineraries
+      %tr
+        %td
+          = link_to itinerary.title, itinerary
+%div{:style => "float:left"}
+  %script{ :src => "http://widgets.twimg.com/j/2/widget.js" }
+  :javascript
+    new TWTR.Widget({
+    version: 2,
+    type: 'profile',
+    rpp: 4,
+    interval: 6000,
+    width: 250,
+    height: 300,
+    theme: {
+    shell: {
+    background: '#333333',
+    color: '#ffffff'
+    },
+    tweets: {
+    background: '#000000',
+    color: '#ffffff',
+    links: '#4aed05'
+    }
+    },
+    features: {
+    scrollbar: false,
+    loop: false,
+    live: false,
+    hashtags: true,
+    timestamp: true,
+    avatars: false,
+    behavior: 'all'
+    }
+    }).render().setUser('wtplanner').start();
 
+%div{:style => "clear:both"}
 %p
   = link_to "New Itinerary", new_itinerary_path
