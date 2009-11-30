@@ -8,6 +8,8 @@
       %tr
         %td
           = link_to itinerary.title, itinerary
+  %p
+    = link_to "New Itinerary", new_itinerary_path
 %div{:style => "float:left"}
   %script{ :src => "http://widgets.twimg.com/j/2/widget.js" }
   :javascript
@@ -41,5 +43,4 @@
     }).render().setUser('wtplanner').start();
 
 %div{:style => "clear:both"}
-%p
-  = link_to "New Itinerary", new_itinerary_path
+
