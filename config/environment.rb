@@ -18,7 +18,15 @@ Rails::Initializer.run do |config|
 
   # Haml and Sass
   config.gem "haml"
+  config.gem "compass"
 
+  # cucumber dependencies
+  # config.gem "cucumber"
+  # config.gem "treetop"
+  # config.gem "nokogiri"
+  # config.gem "builder"
+  # config.gem "pickle"
+  
   # Maps
   config.gem "geokit"
   
