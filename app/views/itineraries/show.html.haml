@@ -3,14 +3,4 @@
   %h5 Itinerary Selector
   = text_field :locations, :name, :id => "geocoding_suggest", :size => 26, :value => "", :class => "focus"
   %ul#location_list
-%div
-  = @map.to_html
-%div{ :style => "width: 100%; height: 550px" }
-  = @map.div
-%div{ :style => "clear: both" }
-/ %p
-/   = link_to "Edit", edit_itinerary_path(@itinerary)
-/   |
-/   = link_to "Destroy", @itinerary, :confirm => 'Are you sure?', :method => :delete
-/   |
-/   = link_to "View All", itineraries_path
+#mapdiv{:style => "height: 100%"}
