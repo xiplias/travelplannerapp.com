@@ -1,7 +1,10 @@
 var locations = new Array;
+var map;
 
 function addLocation (item) {
   locations.push(item);
+  
+   // Data Array
   drawMap();
   drawList();
   
@@ -13,16 +16,47 @@ function addLocation (item) {
   $.post("/locations", {"location[name]": item.address, "location[latitude]": item.latitude, "location[longitude]": item.longitude ,"location[itinerary_id]": id });
 }
 
-function drawList() {
-  $("#location_list").html("");
-  $(locations).each(function() {
-    $("#location_list").append("<li>"+this.address+"</li>");
+function parseList() {
+  var temp_list = new Array;
+  $("#location_list li").each(function() {
+    id = $(this).attr("rel").split("_")[1];
+    temp_list.push(locations[id]);
+  });
+  
+  locations = temp_list;
+}
+
+function addClickDelete() {
+  $("#location_list li a").each(function () {
+    $(this).click(function() {
+      $(this).parent().slideUp().remove();
+      parseList();
+      drawMap();
+    });
   });
 }
 
-function drawMap() {
-  google_map.clearOverlays();
+function drawList() {
+  $("#location_list").html("");
   
+  for(id in locations) {
+    $("#location_list").append("<li rel=\"ul_"+id+"\">"+locations[id].address+"<a href=\"#\" class=\"delete_location\">D</a></li>");
+  };
+  
+  $("ul#location_list").dragsort({ 
+    dragSelector: "li", 
+    dragEnd: function() { 
+      parseList();
+      drawMap();
+    }, 
+    dragBetween: false 
+  });
+  
+  addClickDelete();
+}
+
+function drawMap() {
+  map.clearOverlays();
   
   var last_entry = new Array;
   var points = locations.length;
@@ -30,14 +64,14 @@ function drawMap() {
   
   $(locations).each(function() {
     var latlng = new GLatLng(this.latitude, this.longitude);
-    google_map.addOverlay(new GMarker(latlng));
+    map.addOverlay(new GMarker(latlng));
 
     if(current != 1) {
       var polyline = new GPolyline([
         new GLatLng(last_entry[0], last_entry[1]),
         new GLatLng(this.latitude, this.longitude)
       ], "#ff0000", 10);
-      google_map.addOverlay(polyline);
+      map.addOverlay(polyline);
     }
     
     current++;
@@ -49,7 +83,11 @@ function drawMap() {
 
 }
 
-$(document).ready(function(){  
+$(document).ready(function(){ 
+  
+  map = new GMap2(document.getElementById("mapdiv"));
+  map.setCenter(new GLatLng(51.520832, -0.140133), 2);
+  map.setUIToDefault();
   
   $("#geocoding_suggest").suggest("/locations/find",{
     delay: 200,
@@ -66,9 +104,6 @@ $(document).ready(function(){
 			return item.address;
 		},
 		onSelect: function(item) {  
-			var latlng = new GLatLng(item.latitude, item.longitude);
-      google_map.addOverlay(new GMarker(latlng));
-      
       addLocation(item);
       $("#geocoding_suggest").val("");
 		}
