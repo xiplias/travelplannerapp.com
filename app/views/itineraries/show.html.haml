@@ -1,6 +1,11 @@
 - title @itinerary.title
-#itinerary
-  %h5 Itinerary Selector
-  = text_field :locations, :name, :id => "geocoding_suggest", :size => 26, :value => "", :class => "focus"
-  %ul#location_list
 #mapdiv{:style => "height: 500px"}
+:javascript
+  $(document).ready(function() {
+    // Google Maps
+    map = new GMap2(document.getElementById("mapdiv"));
+    map.setCenter(new GLatLng(51.520832, -0.140133), 2);
+    map.setUIToDefault();
+    
+    $(map).add_location_manager();
+  });

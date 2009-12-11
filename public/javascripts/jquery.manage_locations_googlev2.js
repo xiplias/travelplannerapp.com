@@ -1,14 +1,15 @@
 (function($) {
   $.add_location_manager = function(map, options) {
     var t = this;
-    t.m = $("#"+map.o.id); // Location of google map v2 div
+    t.m = map;
+    t.m_con = $("#"+t.m.o.id); // Location of google map v2 div
     t.l = []; // Location Data Array
     t.o = options;
     
     // Add HTML for manager
-    m.after("<div class=\"lm_con\"><input class=\"lm_search\" /><ul class=\"lm_list\"></ul></div>");
+    t.m_con.after("<div class=\"lm_con\">Search Location:<input class=\"lm_search\" size=\"26\" /><ul class=\"lm_list\"></ul></div>");
     // Geocoding Suggest - Add autosuggest to search box
-    $(".lm_search").suggest(o.autoSuggestUrl,{ 
+    $(".lm_search").suggest(t.o.autoSuggestUrl,{ 
       delay: 200,
     	createItems:function(txt) {
     		if (typeof JSON!=='undefined' && typeof JSON.parse==='function')
@@ -33,14 +34,14 @@
     addLocation: function(item) {
       var t = this;
       
-      t.locations.push(item);
+      t.l.push(item);
 
        // Data Array
       t.drawMap();
       t.drawList();
 
       // Post new location to server
-      $.post(o.pushLocationsToServerUrl, {
+      $.post(t.o.pushLocationsToServerUrl, {
         "location[name]": item.address, 
         "location[latitude]": item.latitude, 
         "location[longitude]": item.longitude ,
@@ -49,51 +50,55 @@
     },
     
     parseList: function() {
-      var temp_list = new Array;
-      $("#location_list li").each(function() {
+      var t = this;
+      var temp_list = [];
+      $(".lm_list li").each(function() {
         id = $(this).attr("rel").split("_")[1];
-        temp_list.push(locations[id]);
+        alert(t.l[id].address);
+        temp_list.push(t.l[id]);
       });
-
-      locations = temp_list;
+      console.log(temp_list);
+      t.l = temp_list;
     },
     
     drawList: function() {
-      $("#location_list").html("");
+      var t = this;
+      $(".lm_list").html("");
 
-      for(id in locations) {
-        $("#location_list").append("<li rel=\"ul_"+id+"\">"+locations[id].address+"<a href=\"#\" class=\"delete_location\">D</a></li>");
+      for(id in t.l) {
+        $(".lm_list").append("<li rel=\"ul_"+id+"\">"+t.l[id].address+"<a href=\"#\" class=\"delete_location\">D</a></li>");
       };
 
-      $("ul#location_list").dragsort({ 
+      $("ul.lm_list").dragsort({ 
         dragSelector: "li", 
         dragEnd: function() { 
-          parseList();
-          drawMap();
+          t.parseList();
+          t.drawMap();
         }, 
         dragBetween: false 
       });
 
-      addClickDelete();
+      this.addClickDelete();
     },
     
     drawMap: function() {
-      map.clearOverlays();
+      t = this;
+      t.m.clearOverlays();
 
       var last_entry = new Array;
-      var points = locations.length;
+      var points = t.l.length;
       var current = 1;
 
-      $(locations).each(function() {
+      $(t.l).each(function() {
         var latlng = new GLatLng(this.latitude, this.longitude);
-        map.addOverlay(new GMarker(latlng));
+        t.m.addOverlay(new GMarker(latlng));
 
         if(current != 1) {
           var polyline = new GPolyline([
             new GLatLng(last_entry[0], last_entry[1]),
             new GLatLng(this.latitude, this.longitude)
           ], "#ff0000", 10);
-          map.addOverlay(polyline);
+          t.m.addOverlay(polyline);
         }
 
         current++;
@@ -103,11 +108,11 @@
     },
     
     addClickDelete: function() {
-      $("#location_list li a").each(function () {
+      $(".lm_list li a").each(function () {
         $(this).click(function() {
           $(this).parent().slideUp().remove();
-          parseList();
-          drawMap();
+          t.parseList();
+          t.drawMap();
         });
       });
     }
