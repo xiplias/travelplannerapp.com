@@ -3,8 +3,10 @@
     var t = this;
     t.m = map;
     t.m_con = $("#"+t.m.o.id); // Location of google map v2 div
-    t.l = []; // Location Data Array
+    t.l = {}; // Location Data Array
+    t.order = []
     t.o = options;
+    t.dragable
     
     // Add HTML for manager
     t.m_con.after("<div class=\"lm_con\">Search Location:<input class=\"lm_search\" size=\"26\" /><ul class=\"lm_list\"></ul></div>");
@@ -33,41 +35,46 @@
   $.extend($.add_location_manager.prototype, {
     addLocation: function(item) {
       var t = this;
+      var uuid = "uuid_"+Math.uuid(6,15);
+      t.l[uuid] = item;
+      t.order.push(uuid);
       
-      t.l.push(item);
-
-       // Data Array
+      // Draw Interface
       t.drawMap();
       t.drawList();
+      
+      
 
       // Post new location to server
       $.post(t.o.pushLocationsToServerUrl, {
         "location[name]": item.address, 
         "location[latitude]": item.latitude, 
         "location[longitude]": item.longitude ,
-        "location[itinerary_id]": id 
+        "location[itinerary_id]": 1 
       });
     },
     
     parseList: function() {
       var t = this;
       var temp_list = [];
+      var ta = [];
       $(".lm_list li").each(function() {
-        id = $(this).attr("rel").split("_")[1];
-        alert(t.l[id].address);
-        temp_list.push(t.l[id]);
+        var id = $(this).attr("rel");
+        temp_list.push(id);
       });
-      console.log(temp_list);
-      t.l = temp_list;
+
+
+      t.order = temp_list;
     },
     
     drawList: function() {
       var t = this;
       $(".lm_list").html("");
-
-      for(id in t.l) {
-        $(".lm_list").append("<li rel=\"ul_"+id+"\">"+t.l[id].address+"<a href=\"#\" class=\"delete_location\">D</a></li>");
-      };
+      for(i=0;i<t.order.length;i++) {
+        key = t.order[i];
+        value = t.l[key];
+        $(".lm_list").append("<li rel=\""+key+"\">"+value.address+"<a href=\"#\" class=\"delete_location\">D</a></li>");
+      }
 
       $("ul.lm_list").dragsort({ 
         dragSelector: "li", 
@@ -86,33 +93,35 @@
       t.m.clearOverlays();
 
       var last_entry = new Array;
-      var points = t.l.length;
-      var current = 1;
-
-      $(t.l).each(function() {
-        var latlng = new GLatLng(this.latitude, this.longitude);
+      var order_length = t.order.length;
+      
+      for(i=0;i<order_length;i++) {
+        key = t.order[i];
+        value = t.l[key];
+        
+        var latlng = new GLatLng(value.latitude, value.longitude);
         t.m.addOverlay(new GMarker(latlng));
 
-        if(current != 1) {
+        if(i != 0) {
           var polyline = new GPolyline([
             new GLatLng(last_entry[0], last_entry[1]),
-            new GLatLng(this.latitude, this.longitude)
+            new GLatLng(value.latitude, value.longitude)
           ], "#ff0000", 10);
           t.m.addOverlay(polyline);
         }
 
-        current++;
-
-        last_entry = [this.latitude, this.longitude];
-      });
+        last_entry = [value.latitude, value.longitude];
+      }
     },
     
     addClickDelete: function() {
+      var t = this;
       $(".lm_list li a").each(function () {
         $(this).click(function() {
           $(this).parent().slideUp().remove();
           t.parseList();
           t.drawMap();
+          t.drawList();
         });
       });
     }
