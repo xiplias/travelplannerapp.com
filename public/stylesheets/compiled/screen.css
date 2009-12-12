@@ -15,37 +15,26 @@ a {
 .header {
   padding: 5px 10px; }
 
-/* line 15, ../../../app/stylesheets/partials/_application.sass */
-#itinerary {
-  position: absolute;
-  right: 7px;
-  top: 100px;
-  background: #fff;
-  border: 1px #ccc solid;
-  z-index: 999;
-  width: 200px;
-  padding: 5px; }
-
-/* line 26, ../../../app/stylesheets/partials/_application.sass */
+/* line 17, ../../../app/stylesheets/partials/_application.sass */
 #flash_notice, #flash_error {
   padding: 5px 8px;
   margin: 10px 0; }
 
-/* line 31, ../../../app/stylesheets/partials/_application.sass */
+/* line 22, ../../../app/stylesheets/partials/_application.sass */
 #flash_notice {
   background-color: #CFC;
   border: solid 1px #6C6; }
 
-/* line 36, ../../../app/stylesheets/partials/_application.sass */
+/* line 27, ../../../app/stylesheets/partials/_application.sass */
 #flash_error {
   background-color: #FCC;
   border: solid 1px #C66; }
 
-/* line 41, ../../../app/stylesheets/partials/_application.sass */
+/* line 32, ../../../app/stylesheets/partials/_application.sass */
 .fieldWithErrors {
   display: inline; }
 
-/* line 45, ../../../app/stylesheets/partials/_application.sass */
+/* line 36, ../../../app/stylesheets/partials/_application.sass */
 #errorExplanation {
   width: 400px;
   border: 2px solid #CF0000;
@@ -53,7 +42,7 @@ a {
   padding-bottom: 12px;
   margin-bottom: 20px;
   background-color: #f0f0f0; }
-  /* line 53, ../../../app/stylesheets/partials/_application.sass */
+  /* line 44, ../../../app/stylesheets/partials/_application.sass */
   #errorExplanation h2 {
     text-align: left;
     font-weight: bold;
@@ -62,27 +51,27 @@ a {
     margin: 0;
     background-color: #c00;
     color: #fff; }
-  /* line 62, ../../../app/stylesheets/partials/_application.sass */
+  /* line 53, ../../../app/stylesheets/partials/_application.sass */
   #errorExplanation p {
     color: #333;
     margin-bottom: 0;
     padding: 8px; }
-  /* line 67, ../../../app/stylesheets/partials/_application.sass */
+  /* line 58, ../../../app/stylesheets/partials/_application.sass */
   #errorExplanation ul {
     margin: 2px 24px; }
-    /* line 70, ../../../app/stylesheets/partials/_application.sass */
+    /* line 61, ../../../app/stylesheets/partials/_application.sass */
     #errorExplanation ul li {
       font-size: 12px;
       list-style: disc; }
 
-/* line 75, ../../../app/stylesheets/partials/_application.sass */
+/* line 66, ../../../app/stylesheets/partials/_application.sass */
 #user_nav {
   position: absolute;
   right: 0;
   top: 0;
   padding: 5px 10px; }
 
-/* line 81, ../../../app/stylesheets/partials/_application.sass */
+/* line 72, ../../../app/stylesheets/partials/_application.sass */
 #location_list {
   font-size: 0.8em; }
 
@@ -296,3 +285,21 @@ sub {
 .ac_match {
   font-weight: bold;
   color: black; }
+
+/* line 1, ../../../app/stylesheets/partials/_manage_locations.sass */
+.lm_con {
+  position: absolute;
+  right: 7px;
+  top: 100px;
+  background: #fff;
+  border: 1px #ccc solid;
+  z-index: 999;
+  width: 200px;
+  padding: 5px; }
+  /* line 11, ../../../app/stylesheets/partials/_manage_locations.sass */
+  .lm_con .lm_list {
+    list-style: none;
+    background: #c1c1c1; }
+    /* line 15, ../../../app/stylesheets/partials/_manage_locations.sass */
+    .lm_con .lm_list li {
+      font-size: 0.8em; }
