@@ -1,12 +1,12 @@
 (function($) {
   $.add_location_manager = function(map, options) {
     var t = this;
-    t.m = map;
+    t.m = map; // Google Map Object
     t.m_con = $("#"+t.m.o.id); // Location of google map v2 div
-    t.l = {}; // Location Data Array
-    t.order = []
-    t.o = options;
-    t.dragable
+    t.l = {}; // Location Data Object
+    t.order = [] // Order Array
+    t.o = options; // Plugin options
+    t.dragable;
     
     // Add HTML for manager
     t.m_con.after("<div class=\"lm_con\">Search Location:<input class=\"lm_search\" size=\"26\" /><ul class=\"lm_list\"></ul></div>");
