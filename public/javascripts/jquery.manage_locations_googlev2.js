@@ -67,6 +67,14 @@
       t.order = temp_list;
     },
     
+    getServerLocations: function() {
+      var t = this;
+      
+      $.get(t.o.locationUrl);
+      
+      
+    },
+
     drawList: function() {
       var t = this;
       $(".lm_list").html("");
@@ -130,7 +138,11 @@
   $.fn.add_location_manager = function(options) {
   	options = $.extend({
       externalDataAtStartup: false,
-      pushLocationsToServerUrl: "/locations",
+      pushLocationToUrl: "/locations",
+      locationUrl: function() {
+        url = window.location.href.split("/");
+        return url[url.length-1];
+      },
       autoSuggestUrl: "/locations/find"
   	},options);
     
