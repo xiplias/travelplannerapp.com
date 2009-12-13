@@ -1,12 +1,14 @@
 (function($) {
   $.add_location_manager = function(map, options) {
     var t = this;
+    t.iid = window.location.href.split("/")[window.location.href.split("/").length-1].split("#")[0];
     t.m = map; // Google Map Object
     t.m_con = $("#"+t.m.o.id); // Location of google map v2 div
     t.l = {}; // Location Data Object
-    t.order = [] // Order Array
+    t.order = []; // Order Array
     t.o = options; // Plugin options
     t.dragable;
+    t.lastId;
     
     // Add HTML for manager
     t.m_con.after("<div class=\"lm_con\">Search Location:<input class=\"lm_search\" size=\"26\" /><ul class=\"lm_list\"></ul></div>");
@@ -26,32 +28,56 @@
     		return item.address;
     	},
     	onSelect: function(item) {  
-        t.addLocation(item);
+        
+        t.sendLocation(item);
+        t.addLocation(item, t.last_id);
+        // Draw Interface
+        t.drawMap();
+        t.drawList();
+        
         $(".lm_search").val("");
     	}
     });
+    
+    
+    //console.log(t.o.locationUrl);
+    t.getRemoteLocations();
   };
   
   $.extend($.add_location_manager.prototype, {
-    addLocation: function(item) {
+    addLocation: function(item, id) {
       var t = this;
       var uuid = "uuid_"+Math.uuid(6,15);
+      
       t.l[uuid] = item;
       t.order.push(uuid);
       
-      // Draw Interface
-      t.drawMap();
-      t.drawList();
-      
-      
-
-      // Post new location to server
-      $.post(t.o.pushLocationsToServerUrl, {
-        "location[name]": item.address, 
-        "location[latitude]": item.latitude, 
-        "location[longitude]": item.longitude ,
-        "location[itinerary_id]": 1 
-      });
+      if(id != "") {
+        t.l[uuid].id = id;
+      }
+    },
+    
+    sendLocation: function(item) {
+       var id;
+       t = this;
+       // Post new location to server
+       $.post("/locations", {
+          "location[address]": item.address, 
+          "location[latitude]": item.latitude, 
+          "location[longitude]": item.longitude,
+          "location[itinerary_id]": t.iid
+       }, function(data) {
+        
+       });
+    },
+    
+    remoteDeleteLocation: function(id) {
+      $.ajax({
+         url: "/locations/"+id,
+         type: 'post',
+         dataType: 'script',
+         data: { '_method': 'delete' },
+     });
     },
     
     parseList: function() {
@@ -67,10 +93,20 @@
       t.order = temp_list;
     },
     
-    getServerLocations: function() {
+    getRemoteLocations: function() {
       var t = this;
       
-      $.get(t.o.locationUrl);
+      $.getJSON(t.o.locationUrl+t.iid+"/locations",
+        function(data) {
+          console.log(data);
+          $.each(data, function(i, item) {
+             t.addLocation(item.location, "");
+          });  
+          
+          t.drawMap();
+          t.drawList();
+        }
+      );
       
       
     },
@@ -127,11 +163,17 @@
       $(".lm_list li a").each(function () {
         $(this).click(function() {
           $(this).parent().slideUp().remove();
+          t.remoteDeleteLocation(t.l[$(this).parent().attr("rel")].id);
           t.parseList();
           t.drawMap();
           t.drawList();
         });
       });
+    },
+    
+    itineraryId: function() {
+      url;
+      return url[url.length-1];
     }
   });
 
@@ -139,10 +181,7 @@
   	options = $.extend({
       externalDataAtStartup: false,
       pushLocationToUrl: "/locations",
-      locationUrl: function() {
-        url = window.location.href.split("/");
-        return url[url.length-1];
-      },
+      locationUrl: "/itineraries/",
       autoSuggestUrl: "/locations/find"
   	},options);
     
