@@ -5,6 +5,14 @@ class LocationsController < ApplicationController
     else
       @locations = Location.all
     end
+    
+    respond_to do |wants|
+      wants.html {}
+      wants.js {  
+        render :partial => "test"
+      }
+    end    
+  
   end
   
   def find
@@ -57,6 +65,11 @@ class LocationsController < ApplicationController
     @location = Location.find(params[:id])
     @location.destroy
     flash[:notice] = "Successfully destroyed location."
-    redirect_to locations_url
+    
+    
+    respond_to do |wants|
+      wants.js { render :text => "" }
+      wants.html{ redirect_to locations_url }
+    end
   end
 end
