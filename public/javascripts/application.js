@@ -1,6 +1,3 @@
-var map;
-
-
 $(document).ready(function(){     
   // Focus
   $("input.focus:first").focus();
