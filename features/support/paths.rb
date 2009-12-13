@@ -10,19 +10,6 @@ module NavigationHelpers
     
     when /the home\s?page/
       '/'
-    when /the signup page/
-      new_user_path
-
-    when /the new itinerary page/
-      new_itinerary_path
-      
-    when /the itinerary page/
-      itineraries_path
-
-    when /the login page/
-      new_user_session_path
-    
-    
     
     # Add more mappings here.
     # Here is a more fancy example:
