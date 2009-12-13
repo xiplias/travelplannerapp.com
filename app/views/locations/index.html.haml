@@ -1,7 +1,7 @@
 = title "Locations" 
 %table
   %tr
-    %th Name
+    %th Address
     %th Latitude
     %th Longitude
     - unless params[:itinerary_id]
@@ -9,7 +9,7 @@
   - @locations.each do |location|
     %tr
       %td
-        = link_to h(location.name), location 
+        = link_to h(location.address), location 
       %td
         =h location.latitude 
       %td
