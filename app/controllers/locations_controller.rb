@@ -37,11 +37,11 @@ class LocationsController < ApplicationController
       flash[:notice] = "Successfully created location."
       respond_to do |format|
         format.html { redirect_to @location }
-        format.js { render :text => "success"}
+        format.js { render :text => @location.id}
       end
     else
       respond_to do |format|
-        format.html { redirect_to @location }
+        format.html { redirect_to location_path }
         format.js { render :text => "failure"}
       end
     end
