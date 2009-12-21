@@ -27,11 +27,20 @@ class ItinerariesController < ApplicationController
   
   def update
     @itinerary = Itinerary.find(params[:id])
+    
     if @itinerary.update_attributes(params[:itinerary])
-      flash[:notice] = "Successfully updated itinerary."
-      redirect_to @itinerary
+      respond_to do |wants|
+        wants.html {  
+          flash[:notice] = "Successfully updated itinerary."
+          redirect_to @itinerary
+        }
+        wants.js { render :nothing => true }
+      end
     else
-      render :action => 'edit'
+      wants.html {  
+        render :action => 'edit'
+      }
+      wants.js { render :text => "failure" }   
     end
   end
   
