@@ -3,7 +3,7 @@
     var t = this;
     t.iid = window.location.href.split("/")[window.location.href.split("/").length-1].split("#")[0];
     t.m = map; // Google Map Object
-    t.m_con = $("#"+t.m.o.id); // Location of google map v2 div
+    t.m_con = $("#"+t.m.A.id); // Location of google map v2 div
     t.l = {}; // Location Data Object
     t.order = []; // Order Array
     t.o = options; // Plugin options
