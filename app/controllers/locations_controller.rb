@@ -1,7 +1,12 @@
 class LocationsController < ApplicationController
   def index
     if params[:itinerary_id]
-      @locations = Location.find(:all, :conditions => "itinerary_id = #{params[:itinerary_id]}")
+      @itinerary = Itinerary.find(params[:itinerary_id])
+      if @itinerary.location_order.nil?
+        @locations = @itinerary.locations      
+      else          
+        @locations = @itinerary.locations.find(:all, :order => "FIND_IN_SET(id, '#{@itinerary.location_order}')")
+      end
     else
       @locations = Location.all
     end
