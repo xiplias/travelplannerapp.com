@@ -39,21 +39,22 @@
     	}
     });
     
-    
-    //console.log(t.o.locationUrl);
     t.getRemoteLocations();
   };
   
   $.extend($.add_location_manager.prototype, {
     addLocation: function(item, id) {
       var t = this;
-      var uuid = "uuid_"+Math.uuid(6,15);
       
-      t.l[uuid] = item;
-      t.order.push(uuid);
+      if(item.id) {
+        var id = item.id;
+      }
+      
+      t.l[id] = item;
+      t.order.push(id);
       
       if(id != "") {
-        t.l[uuid].id = id;
+        t.l[id].id = id;
       }
     },
     
@@ -66,9 +67,15 @@
           "location[latitude]": item.latitude, 
           "location[longitude]": item.longitude,
           "location[itinerary_id]": t.iid
-       }, function(data) {
-        
        });
+    },
+    
+    saveOrder: function() {
+      var t = this;
+      $.post("/itineraries/"+t.iid, {
+        "_method": "put",
+        "itinerary[location_order]": ""+t.order+""
+      });
     },
     
     remoteDeleteLocation: function(id) {
@@ -76,7 +83,7 @@
          url: "/locations/"+id,
          type: 'post',
          dataType: 'script',
-         data: { '_method': 'delete' },
+         data: { '_method': 'delete' }
      });
     },
     
@@ -107,8 +114,6 @@
           t.drawList();
         }
       );
-      
-      
     },
 
     drawList: function() {
@@ -125,6 +130,7 @@
         dragEnd: function() { 
           t.parseList();
           t.drawMap();
+          t.saveOrder();
         }, 
         dragBetween: false 
       });
