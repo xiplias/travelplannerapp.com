@@ -7,36 +7,33 @@
     t.l = {}; // Location Data Object
     t.order = []; // Order Array
     t.o = options; // Plugin options
-    t.dragable;
-    t.lastId;
+    t.nid, t.dragable, t.lastId, t.newest_id;
     
     // Add HTML for manager
     t.m_con.after("<div class=\"lm_con\">Search Location:<input class=\"lm_search\" size=\"26\" /><ul class=\"lm_list\"></ul></div>");
+    
     // Geocoding Suggest - Add autosuggest to search box
     $(".lm_search").suggest(t.o.autoSuggestUrl,{ 
       delay: 200,
-    	createItems:function(txt) {
-    		if (typeof JSON!=='undefined' && typeof JSON.parse==='function')
-    			return JSON.parse(txt);
-    		else
-    			return eval('('+ txt +')');
-    	},
-    	formatItem:function(item,q) {
-    		return "<li>"+this.addMatchClass(item.address,q)+"</li>";
-    	},
-    	selectItemText:function(item) {
-    		return item.address;
-    	},
-    	onSelect: function(item) {  
-        
+      createItems:function(txt) {
+        if (typeof JSON!=='undefined' && typeof JSON.parse==='function')
+          return JSON.parse(txt);
+        else
+          return eval('('+ txt +')');
+      },
+      formatItem:function(item,q) {
+        return "<li>"+this.addMatchClass(item.address,q)+"</li>";
+      },
+      selectItemText:function(item) {
+        return item.address;
+      },
+      onSelect: function(item) {  
         t.sendLocation(item);
-        t.addLocation(item, t.last_id);
         // Draw Interface
         t.drawMap();
         t.drawList();
-        
         $(".lm_search").val("");
-    	}
+      }
     });
     
     t.getRemoteLocations();
@@ -59,15 +56,19 @@
     },
     
     sendLocation: function(item) {
-       var id;
-       t = this;
-       // Post new location to server
-       $.post("/locations", {
-          "location[address]": item.address, 
-          "location[latitude]": item.latitude, 
-          "location[longitude]": item.longitude,
-          "location[itinerary_id]": t.iid
-       });
+      var id;
+      var newest_id;
+      t = this;
+      // Post new location to server
+      $.post("/locations", {
+        "location[address]": item.address, 
+        "location[latitude]": item.latitude, 
+        "location[longitude]": item.longitude,
+        "location[itinerary_id]": t.iid
+      }, function(data) {
+        t.addLocation(item, data);
+      });
+      
     },
     
     saveOrder: function() {
@@ -105,7 +106,6 @@
       
       $.getJSON(t.o.locationUrl+t.iid+"/locations",
         function(data) {
-          console.log(data);
           $.each(data, function(i, item) {
              t.addLocation(item.location, "");
           });  
@@ -139,18 +139,25 @@
     },
     
     drawMap: function() {
-      t = this;
+      var t = this;
       t.m.clearOverlays();
 
-      var last_entry = new Array;
+      var last_entry = new Array();
       var order_length = t.order.length;
-      
+      var marker = new Array();
+
       for(i=0;i<order_length;i++) {
-        key = t.order[i];
-        value = t.l[key];
+        var key = t.order[i];
+        var value = t.l[key];
         
-        var latlng = new GLatLng(value.latitude, value.longitude);
-        t.m.addOverlay(new GMarker(latlng));
+        latlng = new GLatLng(value.latitude, value.longitude);
+        marker.push(new GMarker(latlng));
+        
+        var current_marker = marker[i];
+        
+        GEvent.addListener(current_marker, "click", function() {
+          current_marker.openInfoWindowHtml(value.address);
+        });
 
         if(i != 0) {
           var polyline = new GPolyline([
@@ -161,6 +168,8 @@
         }
 
         last_entry = [value.latitude, value.longitude];
+        
+        t.m.addOverlay(marker[i]);
       }
     },
     
