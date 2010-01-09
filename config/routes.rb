@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :pages
+
   map.resources :itineraries, :has_many => :locations
   map.resources :locations, :collection => {
     :find => :get
