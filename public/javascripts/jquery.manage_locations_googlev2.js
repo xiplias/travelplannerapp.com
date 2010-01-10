@@ -29,9 +29,6 @@
       },
       onSelect: function(item) {  
         t.sendLocation(item);
-        // Draw Interface
-        t.drawMap();
-        t.drawList();
         $(".lm_search").val("");
       }
     });
@@ -48,7 +45,7 @@
       }
       
       t.l[id] = item;
-      t.order.push(id);
+      t.order.push(parseFloat(id));
       
       if(id != "") {
         t.l[id].id = id;
@@ -56,8 +53,7 @@
     },
     
     sendLocation: function(item) {
-      var id;
-      var newest_id;
+      var id, newest_id;
       t = this;
       // Post new location to server
       $.post("/locations", {
@@ -67,8 +63,9 @@
         "location[itinerary_id]": t.iid
       }, function(data) {
         t.addLocation(item, data);
-      });
-      
+        t.drawMap();
+        t.drawList();
+      }); 
     },
     
     saveOrder: function() {
