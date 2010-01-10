@@ -1,11 +1,12 @@
 - title @itinerary.title
 #mapdiv{:style => "height: 500px"}
 :javascript
+  var location_manager;
   $(document).ready(function() {
     // Google Maps
     map = new GMap2(document.getElementById("mapdiv"));
     map.setCenter(new GLatLng(51.520832, -0.140133), 2);
     map.setUIToDefault();
     
-    $(map).add_location_manager();
+    var location_manager = $(map).add_location_manager();
   });
