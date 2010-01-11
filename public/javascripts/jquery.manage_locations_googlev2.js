@@ -10,10 +10,10 @@
     t.nid, t.dragable, t.lastId, t.newest_id;
     
     // Add HTML for manager
-    t.m_con.after("<div class=\"lm_con\">Search Location:<input class=\"lm_search\" size=\"26\" /><ul class=\"lm_list\"></ul></div>");
+    $("#left_panel").html("<ul class=\"lm_list\"></ul></div>");
     
     // Geocoding Suggest - Add autosuggest to search box
-    $(".lm_search").suggest(t.o.autoSuggestUrl,{ 
+    $("#lm_search input").suggest(t.o.autoSuggestUrl,{ 
       delay: 200,
       createItems:function(txt) {
         if (typeof JSON!=='undefined' && typeof JSON.parse==='function')

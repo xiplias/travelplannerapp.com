@@ -287,19 +287,15 @@ sub {
   color: black; }
 
 /* line 1, ../../../app/stylesheets/partials/_manage_locations.sass */
-.lm_con {
-  position: absolute;
-  right: 7px;
-  top: 100px;
-  background: #fff;
-  border: 1px #ccc solid;
-  z-index: 999;
-  width: 200px;
-  padding: 5px; }
-  /* line 11, ../../../app/stylesheets/partials/_manage_locations.sass */
-  .lm_con .lm_list {
-    list-style: none;
-    background: #c1c1c1; }
-    /* line 15, ../../../app/stylesheets/partials/_manage_locations.sass */
-    .lm_con .lm_list li {
-      font-size: 0.8em; }
+.lm_list {
+  padding: 20px;
+  font-family: verdana;
+  list-style: none; }
+  /* line 6, ../../../app/stylesheets/partials/_manage_locations.sass */
+  .lm_list li {
+    padding: 3px 0px;
+    font-size: 0.8em; }
+
+/* line 10, ../../../app/stylesheets/partials/_manage_locations.sass */
+.delete_location {
+  float: right; }
