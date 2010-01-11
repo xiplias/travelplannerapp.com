@@ -29,7 +29,7 @@
       },
       onSelect: function(item) {  
         t.sendLocation(item);
-        $(".lm_search").val("");
+        $("#lm_search").val("");
       }
     });
     
