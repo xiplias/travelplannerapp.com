@@ -5,7 +5,20 @@ class LocationsController < ApplicationController
       if @itinerary.location_order.nil?
         @locations = @itinerary.locations      
       else          
-        @locations = @itinerary.locations.find(:all, :order => "FIND_IN_SET(id, '#{@itinerary.location_order}')")
+        @array = @itinerary.location_order.split(",").collect{ |s| s.to_i }
+        @locations = @itinerary.locations.find(@array)
+        
+        @result = Array.new
+        
+        @array.each do |a|
+          @locations.each do |l|
+            if l.id == a
+              @result.push(l)
+            end
+          end
+        end
+        
+        @locations = @result
       end
     else
       @locations = Location.all
