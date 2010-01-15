@@ -1,4 +1,3 @@
-= title "Locations" 
 %table
   %tr
     %th Address
@@ -6,20 +5,20 @@
     %th Longitude
     - unless params[:itinerary_id]
       %th Itinerary
-  - @locations.each do |location|
-    %tr
-      %td
-        = link_to h(location.address), location 
-      %td
-        =h location.latitude 
-      %td
-        =h location.longitude 
-      - unless params[:itinerary_id]
+    - @locations.each do |location|
+      %tr
         %td
-          =h location.itinerary_id 
-      %td
-        = link_to "Edit", edit_location_path(location) 
-      %td
-        = link_to "Destroy", location, :confirm => 'Are you sure?', :method => :delete 
+          = link_to h(location.address), location 
+        %td
+          =h location.latitude 
+        %td
+          =h location.longitude 
+        - unless params[:itinerary_id]
+          %td
+            =h location.itinerary_id 
+        %td
+          = link_to "Edit", edit_location_path(location) 
+        %td
+          = link_to "Destroy", location, :confirm => 'Are you sure?', :method => :delete 
 %p
   = link_to "New Location", new_location_path 
