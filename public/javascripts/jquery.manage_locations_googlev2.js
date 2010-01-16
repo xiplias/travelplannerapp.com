@@ -167,7 +167,7 @@
       var t = this;
       marker = new GMarker(point);
       GEvent.addListener(marker, "click", function(overlat, latlng) {
-        t.m.openInfoWindowHtml(point, "<div>"+info.address+"</div><div><a href=\"/locations/"+info.id+"\">Read More</a></div>");
+        t.m.openInfoWindowHtml(point, "<div>"+info.address+"</div><div><a href=\""+window.location.pathname+"/locations/"+info.id+"\">Read Wiki Page</a></div>");
       });
       
       return marker;
