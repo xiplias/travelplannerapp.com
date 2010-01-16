@@ -73,7 +73,9 @@ class LocationsController < ApplicationController
     @location = Location.find(params[:id])
     if @location.update_attributes(params[:location])
       flash[:notice] = "Successfully updated location."
-      redirect_to @location
+      if params[:itinerary_id]
+        redirect_to itinerary_location_path(params[:itinerary_id], @location)
+      end
     else
       render :action => 'edit'
     end

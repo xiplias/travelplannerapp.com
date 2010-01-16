@@ -1,7 +1,7 @@
 #preloader{:style => "padding: 50px 30px 30px"}
   - title "Location" 
   %h1= @location.address
-  - form_for(@location, :method => :put) do |f|
+  - form_for(@location, :method => :put, :url => itinerary_location_path(params[:itinerary_id], @location)) do |f|
     %p= f.text_area(:description, :style => "width: 900px; font: normal 1.1em verdana")
     %p= f.submit("Save")
 
