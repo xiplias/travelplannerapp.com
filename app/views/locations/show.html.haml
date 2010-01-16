@@ -1,17 +1,17 @@
- title "Location" 
-%p
-  %strong Name:
-  =h @location.address 
-%p
-  %strong Latitude:
-  =h @location.latitude 
-%p
-  %strong Longitude:
-  =h @location.longitude 
-%p
-  %strong Itinerary:
-  =h @location.itinerary_id 
-%p
-  = link_to "Edit", edit_location_path(@location)  |
-  = link_to "Destroy", @location, :confirm => 'Are you sure?', :method => :delete  |
-  = link_to "View All", locations_path 
+#preloader{:style => "padding: 50px 30px 30px"}
+  - title "Location" 
+  %h1= @location.address
+  - form_for(@location, :method => :put) do |f|
+    %p= f.text_area(:description, :style => "width: 900px; font: normal 1.1em verdana")
+    %p= f.submit("Save")
+
+:javascript
+  uki([
+       { view: 'Box', rect: '0 0 1000 31', anchors: 'left top right', background: 'theme(panel)',
+           childViews: { view: 'Button',   rect: '10px 4px 100px 24px',  id: "back_to_map", anchors: 'left top', text: 'Back To Map' }
+       },
+   ]).attachTo( window, '1000 630' );
+
+   uki("#back_to_map").bind('click', function() {
+      window.location = "#{itinerary_path(params[:itinerary_id])}"
+   });
