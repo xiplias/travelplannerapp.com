@@ -18,10 +18,6 @@ $(document).ready(function(){
       xhr.setRequestHeader("Content-Type", s.contentType);
     }
     s.data = s.data + encodeURIComponent(window._auth_token_name)+ "=" + encodeURIComponent(window._auth_token);
-  });
-  
-  // uki('ScrollPane').attr('background', '#D0D7E2')
-  // uki('ScrollPane').attr('background', '#0F0')
-  // uki('ScrollPane')[0].dom().className = 'ScrollPane';
+  });  
 });
 
