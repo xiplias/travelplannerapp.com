@@ -6,7 +6,7 @@ class LocationsController < ApplicationController
         @locations = @itinerary.locations      
       else          
         @array = @itinerary.location_order.split(",").collect{ |s| s.to_i }
-        @locations = @itinerary.locations.find(@array)
+        @locations = @itinerary.locations.find(:all)
         
         @result = Array.new
         
@@ -14,11 +14,12 @@ class LocationsController < ApplicationController
           @locations.each do |l|
             if l.id == a
               @result.push(l)
+              @locations.delete(l)
             end
           end
         end
         
-        @locations = @result
+        @locations = [@result, @locations].flatten
       end
     else
       @locations = Location.all
