@@ -7,7 +7,7 @@
     t.l = {}; // Location Data Object
     t.order = []; // Order Array
     t.o = options; // Plugin options
-    t.nid, t.dragable, t.lastId, t.newest_id;
+    t.nid, t.dragable, t.lastId, t.newest_id
     
     // Add HTML for manager
     $("#left_panel").html("<ul class=\"lm_list\"></ul></div>");
@@ -141,20 +141,14 @@
 
       var last_entry = new Array();
       var order_length = t.order.length;
-      var marker = new Array();
 
       for(i=0;i<order_length;i++) {
         var key = t.order[i];
         var value = t.l[key];
         
         latlng = new GLatLng(value.latitude, value.longitude);
-        marker.push(new GMarker(latlng));
-        
-        var current_marker = marker[i];
-        
-        GEvent.addListener(current_marker, "click", function() {
-          current_marker.openInfoWindowHtml(value.address);
-        });
+
+        var marker = t.addMarker(latlng, value);
 
         if(i != 0) {
           var polyline = new GPolyline([
@@ -165,9 +159,18 @@
         }
 
         last_entry = [value.latitude, value.longitude];
-        
-        t.m.addOverlay(marker[i]);
+        t.m.addOverlay(marker);
       }
+    },
+    
+    addMarker: function(point, info) {
+      var t = this;
+      marker = new GMarker(point);
+      GEvent.addListener(marker, "click", function(overlat, latlng) {
+        t.m.openInfoWindowHtml(point, "<div>"+info.address+"</div><div><a href=\"/locations/"+info.id+"\">Read More</a></div>");
+      });
+      
+      return marker;
     },
     
     addClickDelete: function() {
