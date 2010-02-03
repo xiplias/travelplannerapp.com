@@ -2,7 +2,7 @@
   - title "Location" 
   %h1= @location.address
   - form_for(@location, :method => :put, :url => itinerary_location_path(params[:itinerary_id], @location)) do |f|
-    %p= f.text_area(:description, :style => "width: 900px; font: normal 1.1em verdana")
+    %p= f.text_area(:description, :style => "width: 900px; font: normal 1.1em verdana", :id => "field1")
     %p= f.submit("Save")
 
 :javascript
@@ -14,4 +14,8 @@
 
    uki("#back_to_map").bind('click', function() {
       window.location = "#{itinerary_path(params[:itinerary_id])}"
+   });
+   
+   bkLib.onDomLoaded(function() {
+   	new nicEditor(new nicEditor({buttonList : ['bold','italic','underline','left','center','right','ol','ul','fontSize','fontFamily','fontFormat','superscript','subscript','indent','outdent','link','unlink','striketrhough','forecolor','bgcolor','image','upload']})).panelInstance('field1');
    });
