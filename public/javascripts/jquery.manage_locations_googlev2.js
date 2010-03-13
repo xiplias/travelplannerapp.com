@@ -1,9 +1,9 @@
 (function($) {
   $.add_location_manager = function(map, options) {
     var t = this;
-    t.iid = window.location.href.split("/")[window.location.href.split("/").length-1].split("#")[0];
+    t.iid = window.location.hash.split("#")[1] //window.location.href.split("/")[window.location.href.split("/").length-1].split("#")[0];
     t.m = map; // Google Map Object
-    t.m_con = $("#"+t.m.A.id); // Location of google map v2 div
+    t.m_con = $("#map")//$("#"+t.m.A.id); // Location of google map v2 div
     t.l = {}; // Location Data Object
     t.order = []; // Order Array
     t.o = options; // Plugin options
@@ -167,7 +167,7 @@
       var t = this;
       marker = new GMarker(point);
       GEvent.addListener(marker, "click", function(overlat, latlng) {
-        t.m.openInfoWindowHtml(point, "<div>"+info.address+"</div><div><a href=\""+window.location.pathname+"/locations/"+info.id+"\">Read Wiki Page</a></div>");
+        t.m.openInfoWindowHtml(point, "<div>"+info.address+"</div><div><a href=\""+window.location.pathname+"/locations/"+info.id+"\" onclick=\"callLocationText("+info.id+");return false;\">Read Wiki Page</a></div>");
       });
       
       return marker;
