@@ -44,6 +44,12 @@ class LocationsController < ApplicationController
   
   def show
     @location = Location.find(params[:id])
+    respond_to do |wants|
+      wants.html {}
+      wants.js {  
+        render :layout => false
+      }
+    end
   end
   
   def new
