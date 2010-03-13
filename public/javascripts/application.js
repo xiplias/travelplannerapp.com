@@ -1,3 +1,13 @@
+function callLocationText(id) {
+  $.get(window.location.href+"/locations/"+id, "", function(data) {
+      $("#text").html(data);
+  });
+  
+  console.log(window.location.href+"/locations/"+id);
+  
+  return false;
+}
+
 $(document).ready(function(){     
   // Focus
   $("input.focus:first").focus();
@@ -18,6 +28,7 @@ $(document).ready(function(){
       xhr.setRequestHeader("Content-Type", s.contentType);
     }
     s.data = s.data + encodeURIComponent(window._auth_token_name)+ "=" + encodeURIComponent(window._auth_token);
-  });  
+  });
 });
 
+  
